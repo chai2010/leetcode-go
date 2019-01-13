@@ -3,5 +3,3 @@
 // license that can be found in the LICENSE file.
 
 module github.com/chai2010/leetcode-go
-
-go 1.12

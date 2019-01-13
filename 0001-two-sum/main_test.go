@@ -10,18 +10,12 @@ import (
 	"testing"
 )
 
-// Case test definition
-type Case struct {
-	nums           []int
-	target         int
-	expectedResult []int
-}
-
 func TestTwoSumV0(t *testing.T) {
 	for i, testCase := range tests {
 		result := twoSumV0(testCase.nums, testCase.target)
-		Assert(t, reflect.DeepEqual(result, testCase.result),
-			i, result, testCase.result,
+		Assertf(t, reflect.DeepEqual(result, testCase.result),
+			"%d: expect = %v, got = %v",
+			i, testCase.result, result,
 		)
 	}
 }
@@ -29,8 +23,19 @@ func TestTwoSumV0(t *testing.T) {
 func TestTwoSumV1(t *testing.T) {
 	for i, testCase := range tests {
 		result := twoSumV1(testCase.nums, testCase.target)
-		Assert(t, reflect.DeepEqual(result, testCase.result),
-			i, result, testCase.result,
+		Assertf(t, reflect.DeepEqual(result, testCase.result),
+			"%d: expect = %v, got = %v",
+			i, testCase.result, result,
+		)
+	}
+}
+
+func TestTwoSumV2(t *testing.T) {
+	for i, testCase := range tests {
+		result := twoSumV2(testCase.nums, testCase.target)
+		Assertf(t, reflect.DeepEqual(result, testCase.result),
+			"%d: expect = %v, got = %v",
+			i, testCase.result, result,
 		)
 	}
 }

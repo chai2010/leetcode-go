@@ -29,8 +29,9 @@ func twoSumV0(nums []int, target int) []int {
 
 这个方案可能不是最快的，但是可能是最符合Go编程哲学的。
 
-1. 代码的实现够简单，采用了两次迭代
+1. 代码的实现够简单，采用了嵌套的两次迭代
 1. 充分利用了`range`和切片的特性，在内部循环避免了重复判断
+1. 时间复杂度是`O(n*n)`
 
 ## 方案V1（8ms）
 
@@ -57,3 +58,30 @@ func twoSumV1(nums []int, target int) []int {
 	return nil
 }
 ```
+
+1. 采用非嵌套的两次循环，第一次为每个数所在的下标建立索引
+1. 第二次遍历的时候，通过map中是否存在需要的数
+1. 时间复杂度是`O(n+n+k)`，其中k是map的时间消耗
+
+## 方案V2（8ms）
+
+```go
+func twoSumV2(nums []int, target int) []int {
+	var idxMap = make(map[int]int)
+	for i, v := range nums {
+		idxMap[v] = i
+	}
+
+	for i, v := range nums {
+		if _, ok := idxMap[target-v]; ok {
+			if j := idxMap[target-v]; j > i {
+				return []int{i, j}
+			}
+		}
+	}
+
+	return nil
+}
+```
+
+在V1中，map的索引不够紧凑。根据题目“你可以假设每种输入只会对应一个答案”，每个数字只会存在一次，因此值需要保存一个索引。从工程角度看，在64位系统，这种方式每个map元素只需要一个`int`，而之前的方式切片头部需要三个`int`。
