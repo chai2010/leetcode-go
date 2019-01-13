@@ -15,3 +15,48 @@
 因此，在满足要求的前提下，我更喜欢符合Go语言哲学的方案。
 
 https://leetcode-cn.com/chai2010/
+
+## 辅助函数
+
+为了便于测试，构造了`Assert`和`Assertf`函数：
+
+```go
+func Assert(tb testing.TB, condition bool, a ...interface{}) {
+	tb.Helper()
+	if !condition {
+		if msg := fmt.Sprint(a...); msg != "" {
+			tb.Fatal("Assert failed: " + msg)
+		} else {
+			tb.Fatal("Assert failed")
+		}
+	}
+}
+
+func Assertf(tb testing.TB, condition bool, format string, a ...interface{}) {
+	tb.Helper()
+	if !condition {
+		if msg := fmt.Sprintf(format, a...); msg != "" {
+			tb.Fatal("Assert failed: " + msg)
+		} else {
+			tb.Fatal("Assert failed")
+		}
+	}
+}
+```
+
+在单元测试中可以这样使用：
+
+```go
+func TestFoo(*testing.T) {
+	Assert(t, 1+1 == 2, "some", "message")
+}
+func TestBar(*testing.T) {
+	Assertf(t, 1+1 == 2, "%s, %s", "some", "message")
+}
+```
+
+## BUGS
+
+Report bugs to <chaishushan@gmail.com>.
+
+Thanks!
