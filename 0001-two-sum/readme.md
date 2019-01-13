@@ -12,7 +12,7 @@
 
 所以返回 `[0, 1]`
 
-## 方案V0
+## 方案V0（44ms）
 
 ```go
 func twoSumV0(nums []int, target int) []int {
@@ -31,3 +31,29 @@ func twoSumV0(nums []int, target int) []int {
 
 1. 代码的实现够简单，采用了两次迭代
 1. 充分利用了`range`和切片的特性，在内部循环避免了重复判断
+
+## 方案V1（8ms）
+
+```go
+func twoSumV1(nums []int, target int) []int {
+	var idxMap = map[int][]int{}
+	for i, v := range nums {
+		idxMap[v] = append(idxMap[v], i)
+	}
+
+	for i, v := range nums {
+		if v+v == target {
+			if len(idxMap[v]) == 2 {
+				return idxMap[v]
+			}
+			continue
+		}
+
+		if _, ok := idxMap[target-v]; ok {
+			return []int{i, idxMap[target-v][0]}
+		}
+	}
+
+	return nil
+}
+```
