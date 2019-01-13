@@ -42,7 +42,7 @@ func (p *ListNode) String() string {
 }
 ```
 
-为了便于测试，为链接实现`NewListNode`构造函数和`Slice`方法，用户和切片的双向转换。
+为了便于测试，为链接实现`NewListNode`构造函数和`Slice`方法，用于和切片的双向转换。
 
 ## 方案V0（28ms）
 
