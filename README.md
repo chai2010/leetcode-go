@@ -55,6 +55,17 @@ func TestBar(*testing.T) {
 }
 ```
 
+也可以在基准测试中使用：
+
+```go
+func BenchmarkHello(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		v := fmt.Sprintf("hello")
+		Assert(b, v == "hello")
+	}
+}
+```
+
 ## BUGS
 
 Report bugs to <chaishushan@gmail.com>.
