@@ -52,45 +52,45 @@ func addTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
 		p, q, carry = l1, l2, 0
 
 		result        = new(ListNode)
-		p_result_next = &result
+		result_prev_next = &result
 	)
 
 	for p != nil && q != nil {
-		(*p_result_next).Val = (p.Val + q.Val + carry) % 10
-		(*p_result_next).Next = new(ListNode)
-		p_result_next = &((*p_result_next).Next)
+		(*result_prev_next).Val = (p.Val + q.Val + carry) % 10
+		(*result_prev_next).Next = new(ListNode)
+		result_prev_next = &((*result_prev_next).Next)
 
 		carry = (p.Val + q.Val + carry) / 10
 		p, q = p.Next, q.Next
 	}
 
 	for p != nil {
-		(*p_result_next).Val = (p.Val + carry) % 10
-		(*p_result_next).Next = new(ListNode)
-		p_result_next = &((*p_result_next).Next)
+		(*result_prev_next).Val = (p.Val + carry) % 10
+		(*result_prev_next).Next = new(ListNode)
+		result_prev_next = &((*result_prev_next).Next)
 
 		carry = (p.Val + carry) / 10
 		p = p.Next
 	}
 	for q != nil {
-		(*p_result_next).Val = (q.Val + carry) % 10
-		(*p_result_next).Next = new(ListNode)
-		p_result_next = &((*p_result_next).Next)
+		(*result_prev_next).Val = (q.Val + carry) % 10
+		(*result_prev_next).Next = new(ListNode)
+		result_prev_next = &((*result_prev_next).Next)
 
 		carry = (q.Val + carry) / 10
 		q = q.Next
 	}
 
 	if carry > 0 {
-		(*p_result_next).Val = 1
+		(*result_prev_next).Val = 1
 	} else {
-		(*p_result_next) = nil
+		(*result_prev_next) = nil
 	}
 
 	return result
 }
 ```
 
-解决的思路是合并两个单向链表，多余的部分追加到尾部。单向链表比较绕的部分是在尾部时需要将前一个节点的Next指针设置为nil，很多人会为前一个节点单独保存一个指针。这里有一个技巧是保存前一个节点Next指针的地址，这样就将单项链表的开头节点/普通节点/尾部节点都同一化处理了。
+解决的思路是合并两个单向链表，多余的部分追加到尾部。单向链表比较绕的部分是在尾部时需要将前一个节点的Next指针设置为nil，很多人会为前一个节点单独保存一个指针。这里有一个技巧是用`result_prev_next`保存前一个节点`Next`指针的地址，这样就将单项链表的开头节点/普通节点/尾部节点都同一化处理了。
 
 目前这个方案耗时28ms，最优的方案大约在20ms附近。鉴于Go语言的特性，28ms应该是Go语言版本中较优的方案了。
