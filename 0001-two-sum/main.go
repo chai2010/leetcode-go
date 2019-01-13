@@ -93,10 +93,8 @@ func twoSumV4(nums []int, target int) []int {
 		for i, vi := range A {
 			for j, vj := range B {
 				if vi+vj == target {
-					if i != mid+j {
-						result <- []int{i, mid + j}
-						return
-					}
+					result <- []int{i, mid + j}
+					return
 				}
 			}
 		}
