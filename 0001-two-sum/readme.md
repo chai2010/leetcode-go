@@ -67,16 +67,14 @@ func twoSumV1(nums []int, target int) []int {
 
 ```go
 func twoSumV2(nums []int, target int) []int {
-	var idxMap = make(map[int]int)
+	var idxMap = make(map[int]int32)
 	for i, v := range nums {
-		idxMap[v] = i
+		idxMap[v] = int32(i)
 	}
 
 	for i, v := range nums {
-		if _, ok := idxMap[target-v]; ok {
-			if j := idxMap[target-v]; j > i {
-				return []int{i, j}
-			}
+		if j, ok := idxMap[target-v]; ok && int(j) > i {
+			return []int{i, int(j)}
 		}
 	}
 
@@ -84,4 +82,6 @@ func twoSumV2(nums []int, target int) []int {
 }
 ```
 
-在V1中，map的索引不够紧凑。根据题目“你可以假设每种输入只会对应一个答案”，每个数字只会存在一次，因此只需要保存1个索引。从工程角度看，在64位系统，这种方式每个map元素只需要1个`int`，而之前的方式切片头部加元素至少需要4个`int`。
+在V1中，map的索引不够紧凑。根据题目“你可以假设每种输入只会对应一个答案”，每个数字只会存在一次，因此只需要保存1个索引。从工程角度看，在64位系统，这种方式每个map元素只需要1个`int`，而之前的方式切片头部加元素至少需要4个`int`。更进一步，在Go语言中切片的总大小不超过4GB，因此索引只需要`int32`类型就可以保存了。
+
+V2和V1的数据结构是一样的，因此有着相同的时间复杂度。但是V2的工程实现细节比V1更好。

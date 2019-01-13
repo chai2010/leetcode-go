@@ -55,16 +55,14 @@ func twoSumV1(nums []int, target int) []int {
 }
 
 func twoSumV2(nums []int, target int) []int {
-	var idxMap = make(map[int]int)
+	var idxMap = make(map[int]int32)
 	for i, v := range nums {
-		idxMap[v] = i
+		idxMap[v] = int32(i)
 	}
 
 	for i, v := range nums {
-		if _, ok := idxMap[target-v]; ok {
-			if j := idxMap[target-v]; j > i {
-				return []int{i, j}
-			}
+		if j, ok := idxMap[target-v]; ok && int(j) > i {
+			return []int{i, int(j)}
 		}
 	}
 
