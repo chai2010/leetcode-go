@@ -107,3 +107,58 @@ V3在V2的基础上继续改进，将两个循环合并为一个循环。这样�
 但是实际运行的结果，V3并没有比V2更快，甚至出现了更慢的情形。猜测的原因：如果结果出现的比较晚，那么V2和V3的map大小差别不大，但是V3循环内部的代码更加复杂（同时读和写），可能影响CPU流水线机制的优化。如果结果出现的早，那么可能V0采用嵌套循环的结果也可能是最快的。
 
 所示说过早优化是万恶之源！
+
+## 方案V4（12ms）
+
+```go
+func twoSumV4(nums []int, target int) []int {
+	mid := len(nums) / 2
+	A, B := nums[:mid], nums[mid:]
+
+	result := make(chan []int, 3)
+
+	// AB
+	go func() {
+		for i, vi := range A {
+			for j, vj := range B {
+				if vi+vj == target {
+					if i != mid+j {
+						result <- []int{i, mid + j}
+						return
+					}
+				}
+			}
+		}
+	}()
+
+	// AA
+	go func() {
+		for i, vi := range A {
+			for j, vj := range A[i+1:] {
+				if vi+vj == target {
+					result <- []int{i, i + 1 + j}
+					return
+				}
+			}
+		}
+	}()
+
+	// BB
+	go func() {
+		for i, vi := range B {
+			for j, vj := range B[i+1:] {
+				if vi+vj == target {
+					result <- []int{mid + i, mid + i + 1 + j}
+					return
+				}
+			}
+		}
+	}()
+
+	return <-result
+}
+```
+
+这个方案通过3个Goroutine将2个嵌套的循环拆分为3个任务并发执行，执行的时间已经和采用map的方案接近了。首先将`nums`切片从中间分割为A和B两个切片，然后2个嵌套的循环对应为`AA`/`BB`/`AB`三种组合类型。
+
+这个方案虽然还不是最快的，但是体现了Go语言的并发哲学，充分利用了多核来加速运算。

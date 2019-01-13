@@ -18,6 +18,7 @@ func main() {
 	fmt.Println(twoSumV1(nums, target))
 	fmt.Println(twoSumV2(nums, target))
 	fmt.Println(twoSumV3(nums, target))
+	fmt.Println(twoSumV4(nums, target))
 
 	// [0, 1]
 }
@@ -80,3 +81,62 @@ func twoSumV3(nums []int, target int) []int {
 	}
 	return nil
 }
+
+func twoSumV4(nums []int, target int) []int {
+	mid := len(nums) / 2
+	A, B := nums[:mid], nums[mid:]
+
+	result := make(chan []int, 3)
+
+	// AB
+	go func() {
+		for i, vi := range A {
+			for j, vj := range B {
+				if vi+vj == target {
+					if i != mid+j {
+						result <- []int{i, mid + j}
+						return
+					}
+				}
+			}
+		}
+	}()
+
+	// AA
+	go func() {
+		for i, vi := range A {
+			for j, vj := range A[i+1:] {
+				if vi+vj == target {
+					result <- []int{i, i + 1 + j}
+					return
+				}
+			}
+		}
+	}()
+
+	// BB
+	go func() {
+		for i, vi := range B {
+			for j, vj := range B[i+1:] {
+				if vi+vj == target {
+					result <- []int{mid + i, mid + i + 1 + j}
+					return
+				}
+			}
+		}
+	}()
+
+	return <-result
+}
+
+// A0A1
+
+//A0A0
+//A0A1
+
+//A1A0
+//A1A1
+
+//AA
+//AB
+//BB
