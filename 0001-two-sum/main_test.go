@@ -40,6 +40,16 @@ func TestTwoSumV2(t *testing.T) {
 	}
 }
 
+func TestTwoSumV3(t *testing.T) {
+	for i, testCase := range tests {
+		result := twoSumV3(testCase.nums, testCase.target)
+		Assertf(t, reflect.DeepEqual(result, testCase.result),
+			"%d: expect = %v, got = %v",
+			i, testCase.result, result,
+		)
+	}
+}
+
 func Assert(tb testing.TB, condition bool, a ...interface{}) {
 	tb.Helper()
 	if !condition {

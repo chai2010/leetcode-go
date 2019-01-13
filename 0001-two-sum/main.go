@@ -17,6 +17,7 @@ func main() {
 	fmt.Println(twoSumV0(nums, target))
 	fmt.Println(twoSumV1(nums, target))
 	fmt.Println(twoSumV2(nums, target))
+	fmt.Println(twoSumV3(nums, target))
 
 	// [0, 1]
 }
@@ -66,5 +67,16 @@ func twoSumV2(nums []int, target int) []int {
 		}
 	}
 
+	return nil
+}
+
+func twoSumV3(nums []int, target int) []int {
+	var idxMap = make(map[int]int32)
+	for i, v := range nums {
+		if j, ok := idxMap[target-v]; ok {
+			return []int{int(j), i}
+		}
+		idxMap[v] = int32(i)
+	}
 	return nil
 }
