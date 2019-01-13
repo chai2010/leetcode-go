@@ -51,7 +51,7 @@ func addTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
 	var (
 		p, q, carry = l1, l2, 0
 
-		result        = new(ListNode)
+		result           = new(ListNode)
 		result_prev_next = &result
 	)
 
