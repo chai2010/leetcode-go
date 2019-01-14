@@ -6,9 +6,12 @@ package main
 
 import (
 	"fmt"
+	"sort"
 )
 
 func main() {
+	fmt.Println(sort.SearchInts([]int{1, 3, 5}, 6))
+
 	fmt.Println(findMedianSortedArrays([]int{1, 3}, []int{2}))
 	fmt.Println(findMedianSortedArrays([]int{1, 2}, []int{3, 4}))
 
@@ -40,5 +43,33 @@ func SolutionV0(nums1 []int, nums2 []int) [2]int {
 		}
 	}
 
-	return [2]int{} // TODO
+	// 类似二分查找，返回-1/0/+1
+	// 0表示完成, -1表示结果在左边, +1表示结果在右边
+	var cmpFn = func(nums1_idx, nums2_idx int) [2]int {
+		return [2]int{}
+	}
+
+	// 类似二分查找
+	var (
+		nums1_idx = len(nums1) / 2
+		nums2_idx = sort.SearchInts(nums2, nums1[nums1_idx])
+	)
+	for {
+		switch status := cmpFn(nums1_idx, nums2_idx); true {
+		case status == [2]int{}:
+			return [2]int{nums1_idx, nums2_idx}
+		case status[0] == 0:
+			switch {
+			case status[1] < 0:
+			case status[1] > 0:
+			}
+		case status[1] == 0:
+			switch {
+			case status[0] < 0:
+			case status[0] > 0:
+			}
+		}
+	}
+
+	return [2]int{}
 }
