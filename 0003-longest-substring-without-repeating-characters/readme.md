@@ -56,7 +56,7 @@ func SolutionV0_strUniqueLen(s string) int {
 }
 ```
 
-思路是计算字符串中每个字符开始的新字符串的第一个无重复字符的子串长度，然后统计最大的长度。
+思路是计算字符串中每个字符开始的新字符串的第一个无重复字符的子串长度，然后统计最大的长度。时间复杂度为`O(n*n*n)`，其中`strUniqueLen`和`strings.IndexByte`分别为`O(n*n)`和`O(n)`的时间复杂度。
 
 ## 方案V1（16ms）
 
