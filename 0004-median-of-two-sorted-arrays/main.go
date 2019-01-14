@@ -23,5 +23,22 @@ func findMedianSortedArrays(nums1 []int, nums2 []int) float64 {
 }
 
 func SolutionV0(nums1 []int, nums2 []int) [2]int {
+	if len(nums1) == 0 && len(nums2) == 0 {
+		return [2]int{}
+	}
+
+	if len(nums1) == 0 {
+		return [2]int{
+			nums2[(len(nums2)-1)/2],
+			nums2[(len(nums2)-0)/2],
+		}
+	}
+	if len(nums2) == 0 {
+		return [2]int{
+			nums1[(len(nums1)-1)/2],
+			nums1[(len(nums1)-0)/2],
+		}
+	}
+
 	return [2]int{} // TODO
 }

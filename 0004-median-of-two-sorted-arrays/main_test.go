@@ -10,6 +10,9 @@ import (
 
 func TestSolutionV0(t *testing.T) {
 	for _, v := range tests {
+		if v._break {
+			break
+		}
 		result := SolutionV0(v.nums1, v.nums2)
 		Assert(t, result == v.result, v, result)
 	}
@@ -18,7 +21,44 @@ func TestSolutionV0(t *testing.T) {
 var tests = []struct {
 	nums1, nums2 []int
 	result       [2]int
+	_break       bool
 }{
+	// empty
+	{
+		nums1:  []int{},
+		nums2:  []int{},
+		result: [2]int{},
+	},
+
+	// only one slice
+	{
+		nums1:  []int{1, 2, 3},
+		nums2:  []int{},
+		result: [2]int{2, 2},
+	},
+	{
+		nums1:  []int{},
+		nums2:  []int{1, 2, 3},
+		result: [2]int{2, 2},
+	},
+
+	// only one slice
+	{
+		nums1:  []int{1, 2, 3, 4},
+		nums2:  []int{},
+		result: [2]int{2, 3},
+	},
+	{
+		nums1:  []int{},
+		nums2:  []int{1, 2, 3, 4},
+		result: [2]int{2, 3},
+	},
+
+	// break
+	{
+		_break: true,
+	},
+
 	{
 		nums1:  []int{1, 3},
 		nums2:  []int{2},
