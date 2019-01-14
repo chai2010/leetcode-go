@@ -20,9 +20,17 @@ func TestSolutionV0(t *testing.T) {
 		Assert(t, v.Length == result, v.Input)
 	}
 }
+
 func TestSolutionV1(t *testing.T) {
 	for _, v := range tests {
 		result := SolutionV1(v.Input)
+		Assert(t, v.Length == result, v.Input)
+	}
+}
+
+func TestSolutionV2(t *testing.T) {
+	for _, v := range tests {
+		result := SolutionV2(v.Input)
 		Assert(t, v.Length == result, v.Input)
 	}
 }

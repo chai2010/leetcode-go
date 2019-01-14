@@ -70,3 +70,29 @@ func SolutionV1_strUniqueLen(s string) int {
 	return len(s)
 }
 ```
+
+## 方案V2（16ms）
+
+```go
+type FlagMap256 [4]uint64
+
+func (p *FlagMap256) Get(i byte) bool {
+	idx0, idx1 := i/64, i%64
+	return ((*p)[idx0] & (1 << uint(idx1))) != 0
+}
+func (p *FlagMap256) SetTrue(i byte) {
+	idx0, idx1 := i/64, i%64
+	(*p)[idx0] |= (1 << uint(idx1))
+}
+
+func SolutionV2_strUniqueLen(s string) int {
+	var flagMap FlagMap256
+	for i := 0; i < len(s); i++ {
+		if flagMap.Get(s[i]) {
+			return i
+		}
+		flagMap.SetTrue(s[i])
+	}
+	return len(s)
+}
+```
