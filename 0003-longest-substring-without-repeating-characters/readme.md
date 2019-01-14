@@ -55,3 +55,18 @@ func SolutionV0_strUniqueLen(s string) int {
 	return i
 }
 ```
+
+## 方案V1（16ms）
+
+```go
+func SolutionV1_strUniqueLen(s string) int {
+	var flagMap [256]bool
+	for i := 0; i < len(s); i++ {
+		if flagMap[s[i]] {
+			return i
+		}
+		flagMap[s[i]] = true
+	}
+	return len(s)
+}
+```
