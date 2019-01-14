@@ -56,6 +56,8 @@ func SolutionV0_strUniqueLen(s string) int {
 }
 ```
 
+思路是计算字符串中每个字符开始的新字符串的第一个无重复字符的子串长度，然后统计最大的长度。
+
 ## 方案V1（16ms）
 
 ```go
@@ -70,6 +72,8 @@ func SolutionV1_strUniqueLen(s string) int {
 	return len(s)
 }
 ```
+
+优化`strUniqueLen`函数。假设字符为1个字节，采用`[256]bool`表格标注字符是否出现过。
 
 ## 方案V2（16ms）
 
@@ -96,3 +100,5 @@ func SolutionV2_strUniqueLen(s string) int {
 	return len(s)
 }
 ```
+
+优化`strUniqueLen`函数。假设字符为1个字节，采用`[4]uint64`大小的表格标注字符是否出现过。时间复杂度是`O(n*n)`。
