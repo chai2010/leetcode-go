@@ -1,3 +1,7 @@
+// Copyright 2019 <chaishushan{AT}gmail.com>. All rights reserved.
+// Use of this source code is governed by a Apache
+// license that can be found in the LICENSE file.
+
 package main
 
 import (
@@ -7,7 +11,9 @@ import (
 
 func main() {
 	for _, s := range []string{"bbbbb", "abcabcbb", "pwwkew"} {
-		fmt.Println(s, lengthOfLongestSubstring(s))
+		fmt.Println(s, lengthOfLongestSubstringV0(s))
+		fmt.Println(s, lengthOfLongestSubstringV1(s))
+		fmt.Println(s, lengthOfLongestSubstringV2(s))
 	}
 
 	// Output:
@@ -16,7 +22,13 @@ func main() {
 	// pwwkew 3
 }
 
-func lengthOfLongestSubstring(s string) int {
+func lengthOfLongestSubstringV0(s string) int {
+	return SolutionV0(s)
+}
+func lengthOfLongestSubstringV1(s string) int {
+	return SolutionV1(s)
+}
+func lengthOfLongestSubstringV2(s string) int {
 	return SolutionV2(s)
 }
 
