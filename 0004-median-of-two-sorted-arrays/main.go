@@ -104,8 +104,8 @@ func SolutionV0(nums1 []int, nums2 []int) [2]int {
 				nums1_mid = (nums1_left + nums1_right) / 2
 				nums2_mid = sort.SearchInts(nums2, nums1[nums2_mid])
 			}
+		default:
+			return [2]int{}
 		}
 	}
-
-	return [2]int{}
 }
